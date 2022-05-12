@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script type="text/javascript" src="jquery.js"></script>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+	<style type="text/css">
+	body, html,#allmap {width: 100%;height: 100%;overflow: hidden;margin:0;font-family:"微软雅黑";}
+	</style>
+	<script type="text/javascript" src="//api.map.baidu.com/api?type=webgl&v=1.0&ak=WLj4Gq6BVTkcVvNIGuRBwGoG9FTzfDOE"></script>
+	<title>地球模式</title>
+</head>
+<body>
+	<div id="allmap"></div>
+	<script type="text/javascript">
+    // GL版命名空间为BMapGL
+	var map = new BMapGL.Map("allmap");    // 创建Map实例
+	//设置坐标点
+	var point1 = new BMapGL.Point(118.5, 27.5);
+	var point2 = new BMapGL.Point(118.6, 27.5);
+	var point3 = new BMapGL.Point(118.7, 27.5);
+	var point4 = new BMapGL.Point(118.8, 27.5);
+	var point5 = new BMapGL.Point(118.9, 27.5);
+
+	map.centerAndZoom(point1, 5);  // 初始化地图,设置中心点坐标和地图级别
+	map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
+	map.setMapType(BMAP_EARTH_MAP);      // 设置地图类型为地球模式
+	//创建点标记
+	var marker1 = new BMapGL.Marker(point1);
+	var marker2 = new BMapGL.Marker(point2);
+	var marker3 = new BMapGL.Marker(point3);
+	var marker4 = new BMapGL.Marker(point4);
+	var marker5 = new BMapGL.Marker(point5);
+	//添加点标记到地图上
+	map.addOverlay(marker1);
+	map.addOverlay(marker2);
+	map.addOverlay(marker3);
+	map.addOverlay(marker4);
+	map.addOverlay(marker5);
+	//创建信息窗口
+	var opts1 = {
+		width: 10,
+		height: 5,
+		title: '采集位置'
+	};
+	//创建信息窗口
+	var infoWindow1 = new BMapGL.InfoWindow('ZK216+823', opts1);
+	var infoWindow2 = new BMapGL.InfoWindow('Yk219+688.4', opts1);
+	var infoWindow3 = new BMapGL.InfoWindow('YK219+684.2', opts1);
+	var infoWindow4 = new BMapGL.InfoWindow('YK219+690.8', opts1);
+	var infoWindow5 = new BMapGL.InfoWindow('YK219+692', opts1);
+
+	//点标记添加点击事件
+	//点标记1
+	marker1.addEventListener('click', function () {
+		// 开启信息窗口
+		map.openInfoWindow(infoWindow1, point1);
+		//Ajax交互传数据给flask
+		$.ajax({
+			url: "/data",
+			contentType: "GET",
+			data: {"position":"ZK216+823"},
+			success: function(data){
+				if(data=="1"){
+					alert("数据加载完毕!");
+				}
+			},
+			error: function(){
+				alert("数据加载失败...")
+			}
+		});
+	});
+
+	//点标记2
+	marker2.addEventListener('click', function () {
+		map.openInfoWindow(infoWindow2, point2); // 开启信息窗口
+		//Ajax交互传数据给flask
+		$.ajax({
+			url: "/data",
+			contentType: "GET",
+			data: {"position":"Yk219+688.4"},
+			success: function(data){
+				if(data=="2"){
+					alert("数据加载完毕!");
+				}
+			},
+			error: function(){
+				alert("数据加载失败...")
+			}
+		});
+	});
+
+	//点标记3
+	marker3.addEventListener('click', function () {
+		map.openInfoWindow(infoWindow3, point3); // 开启信息窗口
+		//Ajax交互传数据给flask
+		$.ajax({
+			url: "/data",
+			contentType: "GET",
+			data: {"position":"YK219+684.2"},
+			success: function(data){
+				if(data=="3"){
+					alert("数据加载完毕!");
+				}
+			},
+			error: function(){
+				alert("数据加载失败...")
+			}
+		});
+	});
+
+	//点标记4
+	marker4.addEventListener('click', function () {
+		map.openInfoWindow(infoWindow4, point4); // 开启信息窗口
+		//Ajax交互传数据给flask
+		$.ajax({
+			url: "/data",
+			contentType: "GET",
+			data: {"position":"YK219+690.8"},
+			success: function(data){
+				if(data=="4"){
+					alert("数据加载完毕!");
+				}
+			},
+			error: function(){
+				alert("数据加载失败...")
+			}
+		});
+	});
+
+	//点标记5
+	marker5.addEventListener('click', function () {
+		map.openInfoWindow(infoWindow5, point5); // 开启信息窗口
+		//Ajax交互传数据给flask
+		$.ajax({
+			url: "/data",
+			contentType: "GET",
+			data: {"position":"YK219+692"},
+			success: function(data){
+				if(data=="5"){
+					alert("数据加载完毕!");
+				}
+			},
+			error: function(){
+				alert("数据加载失败...")
+			}
+		});
+	});
+
+	</script>
+</body>
+</html>
